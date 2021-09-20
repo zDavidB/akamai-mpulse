@@ -32,9 +32,29 @@ curl -X PUT \
 
 ## httpie version
 ```
-http --raw '{"title":"Sterling Upgrade"}' PUT https://mpulse.soasta.com/concerto/mpulse/api/annotations/v1/19211111 X-Auth-Token:${X_MPULSE_TOKEN}
+http --raw '{"title":"Application Upgrade"}' PUT https://mpulse.soasta.com/concerto/mpulse/api/annotations/v1/19211111 X-Auth-Token:${X_MPULSE_TOKEN}
 
 ```
 
 The body of the request (`data-binary` or `raw`) may contain any of the fields used in the Create Annotation request
 
+The response JSON payload on a successfull update will display the whole content of the updated annotation, e.g.
+```
+{
+    "domains": [
+        {
+            "id": 12345,
+            "name": "www.example.co.uk_pm"
+        }
+    ],
+    "end": 1632131125000,
+    "id": 19211111,
+    "lastModified": 1632142594517,
+    "source": "REST API",
+    "start": 1632131125000,
+    "text": "Updated the application deloyment",
+    "title": "Application Upgrade",
+    "type": "USER_ENTERED",
+    "user": "john.smith@example.com"
+}
+```
