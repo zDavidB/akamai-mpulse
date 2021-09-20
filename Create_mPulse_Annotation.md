@@ -35,3 +35,5 @@ http --raw '{"title":"Killed A/B test","start":1631282415000,"end":1632131737000
 The Annotations will appear on dashboard widgets showing timelines as an orange highlight below the timeline axis, e.g.
 ![image](https://user-images.githubusercontent.com/11668707/134006109-97cde0b6-5c61-46f4-b139-496197e879fe.png)
 
+Hovering over the annotation in the dashboard widget will display a small panel with the Title and Text from the annotation.
+The Get mPulse Annotation request will return all the detail as well.
