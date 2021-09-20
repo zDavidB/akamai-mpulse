@@ -11,7 +11,7 @@ Annotations could be built into code deploy pipelines, or they can be created ma
 
 - Determine which App or Apps need the annotation, the same annotation may be applied to multiple apps in one request. See the App domains page for the domain ids required.
 
-- Next, determine the (Unix) Epoch time value in milliseconds for the start of the event and optionally (ideally) the end of the event, e.g. `2021-09-20T10:55:37+01:00` == `1632131737000`
+- Next, determine the (Unix) Epoch time value in microseconds for the start of the event and optionally (ideally) the end of the event, e.g. `2021-09-20T10:55:37+01:00` == `1632131737000`
 
 - Create and execute an API request as below.
 
