@@ -10,15 +10,18 @@ To get a list of the existing annotations
 
 - First create an mPulse Auth token, see Create mPulse Auth Token. Ideally save the Auth token as an env variable, e.g. **X_MPULSE_TOKEN** to be used in the API request below
 
-- Determine which Domain Id for the App or Apps  you need to list the annotations, the same annotation may be applied to multiple apps in one request. See the App domains page for the domain ids required.
+- Determine which Domain Id for the App or Apps  you need to list the annotations, the same annotation may be applied to multiple apps in one request.
 
 - Next, determine the (Unix) Epoch time value in microseconds for the start of the annotations and optionally (ideally) the end of the annotations, e.g. `2021-09-20T10:55:37+01:00` == `1632131737000`
 
 - Create and execute an API request as below.
+     - the `&domain=12345` is optional and doesn't need to be added, also more than one domain id can be specified as comma seperated values
+     - the `date-start` is optional but you could end up with quite a long list
+     - the `date-end` may also be added
 
 - The response should be a 200 with a JSON payload with a JSON payload listing all the annotations for the matching criteria
 
-Note the JSON payload for each request
+Note the JSON payload for each request.
 
 ## curl version
 ```shell
