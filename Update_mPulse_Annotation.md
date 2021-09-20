@@ -8,13 +8,13 @@ Annotations could be built into code deploy pipelines, or they can be created ma
 
 - Existing Annotations may be updated via the API request
 
-- First create an mPulse Auth token, see Create mPulse Auth Token. Ideally save the Auth token as an env variable, e.g. X_MPULSE_TOKEN to be used in the API request below
+- First create an mPulse Auth token, see Create mPulse Auth Token. Ideally save the Auth token as an env variable, e.g. **X_MPULSE_TOKEN** to be used in the API request below
 
 - Determine which App or Apps need the annotation, the same annotation may be applied to multiple apps in one request. See the App domains page for the domain ids required.
 
 - From a previous annotation request or from the List annotations request, find the Annotation Id of an existing request
 
-- Optionally, determine the (Unix) Epoch time value in milliseconds for the start of the event and optionally (ideally) the end of the event, e.g. '2021-09-20T10:55:37+01:00" == 1632131737000
+- Optionally, determine the (Unix) Epoch time value in microseconds for the start of the event and optionally (ideally) the end of the event, e.g. `2021-09-20T10:55:37+01:00` == `1632131737000`
 
 - Create and execute an API request as below.
 
