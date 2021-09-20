@@ -32,4 +32,6 @@ curl -X POST \
 ```shell
 http --raw '{"title":"Killed A/B test","start":1631282415000,"end":1632131737000,"text":"Deactivate the A/B test - ref ticket ABCD-123456","domainIds":[12345] }' POST https://mpulse.soasta.com/concerto/mpulse/api/annotations/v1 X-Auth-Token:${X_MPULSE_TOKEN}
 ```
+The Annotations will appear on dashboard widgets showing timelines as an orange highlight below the timeline axis, e.g.
+![image](https://user-images.githubusercontent.com/11668707/134006109-97cde0b6-5c61-46f4-b139-496197e879fe.png)
 
