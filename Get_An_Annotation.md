@@ -57,12 +57,12 @@ Example response
 
 ## Advanced response processing
 
-Taking the response and turn into a table
+Taking the response and turn into a cleaner JSON object
 
 ```
 http GET https://mpulse.soasta.com/concerto/mpulse/api/annotations/v1/19211111 X-Auth-Token:${X_MPULSE_TOKEN}  \
     | jq -r '. | [ {id: .id, title: .title, text: .text, start: (.start / 1000 | strftime("%Y-%m-%d %H:%M:%S UTC")), end: (.end / 1000 | strftime("%Y-%m-%d %H:%M:%S UTC")), lastModified:(.lastModified / 1000 | strftime("%Y-%m-%d %H:%M:%S UTC")), source: .source, type: .type, user: .user, domain: .domains[]}]'
 
 ```
-Uses jq to post-process the response, converting the Epoch time values into ISO dates, then formats into Tab separated values, finally uses the column function to turn into a table.
+Uses jq to post-process the response, converting the Epoch time values into ISO dates.
 
