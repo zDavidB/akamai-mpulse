@@ -1,0 +1,478 @@
+{
+	"info": {
+		"_postman_id": "2917bbbe-1eb0-4e8d-affc-9064c953280c",
+		"name": "Akamai mPulse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authorisation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let response_data = pm.response.json();",
+							"const token_regex = /^[0-9a-f]{8}-[0-9a-f]{4,6}-[0-9a-f]{4,6}-[0-9a-f]{4,6}-[0-9a-f]{12}$/gi;",
+							"",
+							"pm.test(\"Valid Token Returned\", () => {",
+							"    pm.expect(response_data.token).match(token_regex)",
+							"})",
+							"",
+							"//Save the token value as a Collection variable",
+							"pm.collectionVariables.set(\"X-Auth-Token\", response_data.token);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"apiToken\": \"{{apiToken}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mpulseHost}}/concerto/services/rest/RepositoryService/v1/Tokens",
+					"host": [
+						"{{mpulseHost}}"
+					],
+					"path": [
+						"concerto",
+						"services",
+						"rest",
+						"RepositoryService",
+						"v1",
+						"Tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Annotate",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Time in UTC format !!",
+							"let start_date = new Date(\"2021-09-21T00:55:00Z\").getTime(); ",
+							"let end_date = new Date(\"2021-09-21T02:00:00Z\").getTime();",
+							"let title = \"Peak Perf Test Run 2\"",
+							"let text = \"Peak Trading Perf Test Run 2\"",
+							"let domain = 12345",
+							"",
+							"console.log(\"Start Date \"+start_date)",
+							"console.log(\"End Date \"+end_date)",
+							"",
+							"pm.collectionVariables.set(\"start_date\", start_date);",
+							"pm.collectionVariables.set(\"end_date\", end_date);",
+							"pm.collectionVariables.set(\"title\", title);",
+							"pm.collectionVariables.set(\"text\", text);",
+							"pm.collectionVariables.set(\"domain\", domain);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let response_data = pm.response.json();",
+							"const annotation_id_regex = /^[0-9]{7,12}$/gi;",
+							"",
+							"pm.test(\"Valid Token Returned\", () => {",
+							"    pm.expect(response_data.id).match(annotation_id_regex)",
+							"})",
+							"",
+							"//Save the token value as a Collection variable",
+							"pm.collectionVariables.set(\"annotation_id\", response_data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{X-Auth-Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"title\":\"{{title}}\",\n   \"text\":\"{{text}}\",\n   \"start\":{{start_date}},\n   \"end\":{{end_date}},\n   \"domainIds\":[{{domain}}]\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mpulseHost}}/concerto/mpulse/api/annotations/v1",
+					"host": [
+						"{{mpulseHost}}"
+					],
+					"path": [
+						"concerto",
+						"mpulse",
+						"api",
+						"annotations",
+						"v1"
+					]
+				},
+				"description": "Get the Domain Ids from mPulse view source of an app, search for domainId, or from the List Annotations request"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Annotation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Time in UTC format !!",
+							"let start_date = new Date(\"2021-09-20T00:00:00Z\").getTime(); ",
+							"let end_date = new Date(\"2021-09-21T07:45:00Z\").getTime();",
+							"let title = \"Peak Perf Test Run 1\"",
+							"let text = \"Peak Trading Perf Test Run 1\"",
+							"let domain = 12345",
+							"",
+							"console.log(\"Start Date \"+start_date)",
+							"console.log(\"End Date \"+end_date)",
+							"",
+							"pm.collectionVariables.set(\"start_date\", start_date);",
+							"pm.collectionVariables.set(\"end_date\", end_date);",
+							"pm.collectionVariables.set(\"title\", title);",
+							"pm.collectionVariables.set(\"text\", text);",
+							"pm.collectionVariables.set(\"domain\", domain);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let response_data = pm.response.json();",
+							"const annotation_id_regex = /^[0-9]{7,12}$/gi;",
+							"",
+							"pm.test(\"Valid Token Returned\", () => {",
+							"    pm.expect(response_data.id).match(annotation_id_regex)",
+							"})",
+							"",
+							"let start_date = pm.variables.get(\"start_date\");",
+							"let end_date = pm.variables.get(\"end_date\");",
+							"",
+							"pm.test(\"Valid Start Date Returned\", () => {",
+							"    pm.expect(response_data.start).equals(start_date)",
+							"})",
+							"var start_date_obj = new Date(start_date);",
+							"console.log(start_date_obj.toLocaleString());",
+							"",
+							"pm.test(\"Valid End Date Returned\", () => {",
+							"    pm.expect(response_data.end).equals(end_date)",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{X-Auth-Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"title\":\"{{title}}\",\n   \"text\":\"{{text}}\",\n   \"start\":{{start_date}},\n   \"end\":{{end_date}},\n   \"domainIds\":[{{domain}}]\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mpulseHost}}/concerto/mpulse/api/annotations/v1/{{annotation_id}}",
+					"host": [
+						"{{mpulseHost}}"
+					],
+					"path": [
+						"concerto",
+						"mpulse",
+						"api",
+						"annotations",
+						"v1",
+						"{{annotation_id}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "List Annotations",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let start_date = new Date(\"2021-09-20T00:00:00Z\").getTime(); ",
+							"let end_date = new Date(\"2021-09-21T07:45:00Z\").getTime();",
+							"",
+							"pm.collectionVariables.set(\"start_date\", start_date);",
+							"pm.collectionVariables.set(\"end_date\", end_date);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{X-Auth-Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{mpulseHost}}/concerto/mpulse/api/annotations/v1?date-start={{start_date}}",
+					"host": [
+						"{{mpulseHost}}"
+					],
+					"path": [
+						"concerto",
+						"mpulse",
+						"api",
+						"annotations",
+						"v1"
+					],
+					"query": [
+						{
+							"key": "date-start",
+							"value": "{{start_date}}"
+						},
+						{
+							"key": "date-end",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "domain",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get An Annotation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let annotation_id = parseInt(pm.variables.get(\"annotation_id\"));",
+							"let title = pm.variables.get(\"title\");",
+							"let text = pm.variables.get(\"text\");",
+							"let start_date = pm.variables.get(\"start_date\");",
+							"let end_date = pm.variables.get(\"end_date\");",
+							"let response_data = pm.response.json();",
+							"",
+							"",
+							"pm.test(\"Valid Annotation Id Returned\", () => {",
+							"    pm.expect(response_data.id).equals(annotation_id)",
+							"})",
+							"",
+							"pm.test(\"Valid Annotation Title Returned\", () => {",
+							"    pm.expect(response_data.title).equals(title)",
+							"})",
+							"",
+							"pm.test(\"Valid Annotation Text Returned\", () => {",
+							"    pm.expect(response_data.text).equals(text)",
+							"})",
+							"",
+							"pm.test(\"Valid Annotation Source Returned\", () => {",
+							"    pm.expect(response_data.source).equals(\"REST API\")",
+							"})",
+							"",
+							"pm.test(\"Valid Annotation Type Returned\", () => {",
+							"    pm.expect(response_data.type).equals(\"USER_ENTERED\")",
+							"})",
+							"",
+							"pm.test(\"Valid Start Date Returned\", () => {",
+							"    pm.expect(response_data.start).equals(start_date)",
+							"})",
+							"",
+							"",
+							"var start_date_obj = new Date(start_date).toLocaleDateString('en-GB', {  ",
+							"    weekday: 'long',",
+							"    day:   'numeric',",
+							"    month: 'short',",
+							"    year:  'numeric',",
+							"    hour:   '2-digit',",
+							"    minute: '2-digit',    ",
+							"});",
+							"console.log(\"Start Time \"+start_date_obj);",
+							"",
+							"var end_date_obj = new Date(end_date).toLocaleDateString('en-GB', {  ",
+							"    weekday: 'long',",
+							"    day:   'numeric',",
+							"    month: 'short',",
+							"    year:  'numeric',",
+							"    hour:   '2-digit',",
+							"    minute: '2-digit',    ",
+							"});",
+							"console.log(\"End Time \"+end_date_obj);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{X-Auth-Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{mpulseHost}}/concerto/mpulse/api/annotations/v1/{{annotation_id}}",
+					"host": [
+						"{{mpulseHost}}"
+					],
+					"path": [
+						"concerto",
+						"mpulse",
+						"api",
+						"annotations",
+						"v1",
+						"{{annotation_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiToken",
+			"value": "<your api token here>"
+		},
+		{
+			"key": "X-Auth-Token",
+			"value": ""
+		},
+		{
+			"key": "start_date",
+			"value": ""
+		},
+		{
+			"key": "end_date",
+			"value": ""
+		},
+		{
+			"key": "title",
+			"value": ""
+		},
+		{
+			"key": "text",
+			"value": ""
+		},
+		{
+			"key": "domain",
+			"value": ""
+		},
+		{
+			"key": "annotation_id",
+			"value": ""
+		}
+	]
+}
